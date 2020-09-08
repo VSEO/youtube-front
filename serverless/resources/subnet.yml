@@ -1,0 +1,19 @@
+Resources:
+  ProductionFrontendPrivateSubnetA:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: ${self:custom.definitions.vpc.id}
+      AvailabilityZone: ${self:custom.definitions.subnet.subnetA.availablityZone}
+      CidrBlock: ${self:custom.definitions.subnet.subnetA.cidrBlock}
+      Tags:
+        - Key: Name
+          Value: ProductionFrontendPrivateSubnetA
+  ProductionFrontendPrivateSubnetB:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: ${self:custom.definitions.vpc.id}
+      AvailabilityZone: ${self:custom.definitions.subnet.subnetB.availablityZone}
+      CidrBlock: ${self:custom.definitions.subnet.subnetB.cidrBlock}
+      Tags:
+        - Key: Name
+          Value: ProductionFrontendPrivateSubnetB

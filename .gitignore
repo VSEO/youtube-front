@@ -1,0 +1,8 @@
+.nuxt
+node_modules
+
+.idea
+yarn-error.log
+
+.envrc
+.trash

@@ -1,0 +1,43 @@
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "lib": [
+      "esnext",
+      "esnext.asynciterable",
+      "dom"
+    ],
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "allowJs": true,
+    "sourceMap": true,
+    "strict": true,
+    "noEmit": false,
+    "noImplicitAny": false,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/*"],
+      "@/*": ["./src/*"],
+      "@atoms/*": ["./src/components/atoms/*"],
+      "@molecules/*": ["./src/components/molecules/*"],
+      "@organisms/*": ["./src/components/organisms/*"],
+      "@compositions/*": ["./src/compositions/*"],
+      "@options/*": ["./src/options/*"],
+      "@models/*": ["./src/models/*"],
+      "@store/*": ["./src/store/*"],
+      "@utils/*": ["./src/utils/*"]
+    },
+    "types": [
+      "@types/node",
+      "@types/express",
+      "@types/express-session",
+      "@nuxt/types",
+      "@nuxtjs/moment",
+      "@nuxtjs/vuetify"
+    ]
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

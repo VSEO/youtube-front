@@ -1,0 +1,23 @@
+Resources:
+  AssetsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: ${self:custom.definitions.bucketName}
+      AccessControl: PublicRead
+  AssetsBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket:
+        Ref: AssetsBucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement: [
+        {
+          Action: ['s3:GetObject'],
+          Effect: 'Allow',
+          Resource: {
+            Fn::Join: ['', ['arn:aws:s3:::', { Ref: 'AssetsBucket' }, '/*']],
+          },
+          Principal: '*'
+        },
+        ]

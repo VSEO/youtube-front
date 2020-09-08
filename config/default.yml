@@ -1,0 +1,17 @@
+session:
+  secret: Tq0uI7C9ETU7OSufLXr8tRRsNwYsIow5
+  resave: false
+  saveUninitialized: true
+  rolling: true
+  cookie:
+    httpOnly: true
+    secure: false
+    maxAge: 1800000
+endpoint:
+  frontend: http://localhost:3000
+  backend: http://localhost:8080
+  google: https://www.google.com
+aws:
+  s3:
+    assets: http://localhost:3000/_nuxt/
+    static: http://localhost:3000/

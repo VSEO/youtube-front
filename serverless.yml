@@ -1,0 +1,127 @@
+service:
+  name: ${self:custom.definitions.name}
+
+plugins:
+  - serverless-s3-sync
+  - serverless-apigw-binary
+  - serverless-plugin-warmup
+  - serverless-plugin-canary-deployments
+
+package:
+  include:
+    - .nuxt/**
+    - build/**
+    - config/**
+  exclude:
+    - .**
+    - .**/*
+    - '**'
+    - '**/**'
+    - '!node_modules/**'
+  excludeDevDependencies: true
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  region: ap-northeast-1
+  stage: ${opt:stage}
+  environment:
+    TZ: Asia/Tokyo
+  iamManagedPolicies:
+    - 'arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess'
+    - 'arn:aws:iam::aws:policy/service-role/AWSLambdaDynamoDBExecutionRole'
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - lambda:InvokeFunction
+      Resource:
+        - Fn::Join:
+            - ':'
+            - - arn:aws:lambda
+              - Ref: AWS::Region
+              - Ref: AWS::AccountId
+              - function:${self:service}-${opt:stage, self:provider.stage}-*
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.definitions.dynamodb.table}"
+  logRetentionInDays: 14
+
+custom:
+  definitions:
+    name: youtube-front
+    bucketName: ${self:custom.definitions.name}-${opt:stage}
+    lambda:
+      timeout: 30
+      memorySize: 512
+    dynamodb:
+      table: ${self:service}-${opt:stage, self:provider.stage}-sessions
+    vpc:
+      id: vpc-02c9ef3cb9583d8f0
+    subnet:
+      subnetA:
+        cidrBlock: 10.1.20.0/24
+        availablityZone: ${self:provider.region}a
+      subnetB:
+        cidrBlock: 10.1.21.0/24
+        availablityZone: ${self:provider.region}c
+    ec2:
+      springboard:
+        id: i-06c753a4be6ecbc39
+    securityGroup:
+      springboard:
+        id: sg-0d81bd1ec03e06d7b
+    environment:
+      NODE_ENV: ${env:NODE_ENV}
+      SESSION_SECRET: ${env:SESSION_SECRET}
+      DYNAMODB_TABLE: ${self:custom.definitions.dynamodb.table}
+  s3Sync:
+    - bucketName: ${self:custom.definitions.bucketName}
+      bucketPrefix: assets/
+      localDir: .nuxt/dist/client
+    - bucketName: ${self:custom.definitions.bucketName}
+      bucketPrefix: static/
+      localDir: src/static
+  apigwBinary:
+    types:
+      - '*/*'
+
+functions:
+  nuxt:
+    handler: build/server/handler.handler
+    timeout: ${self:custom.definitions.lambda.timeout}
+    memorySize: ${self:custom.definitions.lambda.memorySize}
+    vpc:
+      securityGroupIds:
+        - !Ref ProductionFrontendSecurityGroup
+      subnetIds:
+        - !Ref ProductionFrontendPrivateSubnetA
+        - !Ref ProductionFrontendPrivateSubnetB
+    environment: ${self:custom.definitions.environment}
+    warmup:
+      enabled: true
+    events:
+      - http:
+          path: '/'
+          method: any
+      - http:
+          path: '{proxy+}'
+          method: any
+    deploymentSettings:
+      type: AllAtOnce
+      alias: Live
+  authorizer:
+    handler: build/server/authorizer.handler
+
+resources:
+  - ${file(./serverless/resources/subnet.yml)}
+  - ${file(./serverless/resources/route-table.yml)}
+  - ${file(./serverless/resources/security-group.yml)}
+  - ${file(./serverless/resources/dynamo-db.yml)}
+  - ${file(./serverless/resources/s3.yml)}

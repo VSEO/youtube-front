@@ -1,0 +1,27 @@
+Resources:
+  ProductionFrontendSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: SecurityGroup for Production end Lambda Functions
+      VpcId: ${self:custom.definitions.vpc.id}
+      Tags:
+        - Key: Name
+          Value: ProductionFrontendSecurityGroup
+  ProductionSpringboardSecurityGroupIngress80:
+    DependsOn: ProductionFrontendSecurityGroup
+    Type: 'AWS::EC2::SecurityGroupIngress'
+    Properties:
+      GroupId: ${self:custom.definitions.securityGroup.springboard.id}
+      IpProtocol: tcp
+      FromPort: 80
+      ToPort: 80
+      SourceSecurityGroupId: !Ref ProductionFrontendSecurityGroup
+  ProductionSpringboardSecurityGroupIngress443:
+    DependsOn: ProductionFrontendSecurityGroup
+    Type: 'AWS::EC2::SecurityGroupIngress'
+    Properties:
+      GroupId: ${self:custom.definitions.securityGroup.springboard.id}
+      IpProtocol: tcp
+      FromPort: 443
+      ToPort: 443
+      SourceSecurityGroupId: !Ref ProductionFrontendSecurityGroup

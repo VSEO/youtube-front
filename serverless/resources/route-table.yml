@@ -1,0 +1,24 @@
+Resources:
+  ProductionFrontendRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: ${self:custom.definitions.vpc.id}
+      Tags:
+        - Key: Name
+          Value: ProductionFrontendRouteTable
+  ProductionFrontendRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref ProductionFrontendRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      InstanceId : ${self:custom.definitions.ec2.springboard.id}
+  ProductionFrontendSubnetARouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref ProductionFrontendPrivateSubnetA
+      RouteTableId: !Ref ProductionFrontendRouteTable
+  ProductionFrontendSubnetBRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref ProductionFrontendPrivateSubnetB
+      RouteTableId: !Ref ProductionFrontendRouteTable

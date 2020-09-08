@@ -1,0 +1,16 @@
+session:
+  secret: xxxxxxxx
+  resave: false
+  saveUninitialized: true
+  rolling: true
+  cookie:
+    httpOnly: true
+    secure: true
+    maxAge: 10800000 # 1000ms * 60s * 60m * 3h
+endpoint:
+  frontend: https://youtube.playgrounds.tech
+  backend: https://api.youtube.playgrounds.tech
+aws:
+  s3:
+    assets: https://youtube-front-prod.s3-ap-northeast-1.amazonaws.com/assets/
+    static: https://youtube-front-prod.s3-ap-northeast-1.amazonaws.com/static/

@@ -1,0 +1,5 @@
+session:
+  secret: SESSION_SECRET
+aws:
+  dynamodb:
+    table: DYNAMODB_TABLE

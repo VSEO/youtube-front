@@ -1,0 +1,24 @@
+Resources:
+  ProductionDynamoDBEndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      ServiceName: "com.amazonaws.${self:provider.region}.dynamodb"
+      VpcId: ${self:custom.definitions.vpc.id}
+      RouteTableIds:
+        - !Ref ProductionFrontendRouteTable
+  ProductionDynamoDbTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: ${self:custom.definitions.dynamodb.table}
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+      Tags:
+        - Key: Name
+          Value: ProductionDynamoDbTable
