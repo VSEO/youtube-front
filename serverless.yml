@@ -124,4 +124,4 @@ resources:
   - ${file(./serverless/resources/route-table.yml)}
   - ${file(./serverless/resources/security-group.yml)}
   - ${file(./serverless/resources/dynamo-db.yml)}
-  - ${file(./serverless/resources/s3.yml)}
+#  - ${file(./serverless/resources/s3.yml)}
