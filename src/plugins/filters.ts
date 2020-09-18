@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { formatDate, formatDateTime, truncate } from '@utils/transformer'
+import { formatDate, formatDateTime, formatNumber, truncate } from '@utils/transformer'
 
 interface Filter {
   id: string
@@ -9,6 +9,7 @@ interface Filter {
 export const filters: Filter[] = [
   { id: 'formatDate', definition: formatDate },
   { id: 'formatDateTime', definition: formatDateTime },
-  { id: 'truncate', definition: truncate }
+  { id: 'formatNumber', definition: formatNumber },
+  { id: 'truncate', definition: truncate },
 ]
 filters.forEach((filter: Filter) => Vue.filter(filter.id, filter.definition))

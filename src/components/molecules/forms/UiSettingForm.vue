@@ -3,8 +3,8 @@
     v-row
       v-col(cols="12")
         v-card
-          v-card-title 平均視聴回数
-          v-card-subtitle 平均視聴回数を条件で色分けできます。
+          v-card-title 1投稿平均視聴回数
+          v-card-subtitle 1投稿平均視聴回数を条件で色分けできます。
           v-card-text
             v-list
               v-list-item.red.lighten-2.my-2

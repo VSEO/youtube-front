@@ -14,20 +14,20 @@
                   v-card-text.px-0
                     span {{ data.keyword }}
             v-col
-              .list-item-header.mb-2 平均視聴回数
+              .list-item-header.mb-2 1投稿平均視聴回数
               .list-item-content
                 v-card(outlined :class="buildClass(data.averageViewCount, setting.averageViewCount)")
-                  v-card-text {{ data.averageViewCount }}
+                  v-card-text.font-weight-bold {{ data.averageViewCount | formatNumber }}
             v-col
               .list-item-header.mb-2 7日間の投稿数
               .list-item-content
                 v-card(outlined :class="buildClass(data.weeklyPublishCount, setting.weeklyPublishCount)")
-                  v-card-text {{ data.weeklyPublishCount }}
+                  v-card-text.font-weight-bold {{ data.weeklyPublishCount | formatNumber }}
             v-col
               .list-item-header.mb-2 7日間の視聴回数
               .list-item-content
                 v-card(outlined :class="buildClass(data.weeklyViewCount, setting.weeklyViewCount)")
-                  v-card-text {{ data.weeklyViewCount }}
+                  v-card-text.font-weight-bold {{ data.weeklyViewCount | formatNumber }}
     template(v-else)
       v-list-item
         v-list-item-content 検索結果はまだありません

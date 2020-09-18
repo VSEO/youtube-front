@@ -13,6 +13,9 @@ export function formatDate(value: any, format: string = 'YYYY-MM-DD'): string {
 export function formatDateTime(value: any, format: string = 'YYYY-MM-DD HH:mm'): string {
   return moment(value).format(format)
 }
+export function formatNumber(value: any): string {
+  return value?.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1,')
+}
 export function truncate(value: any, length: number = 200): string {
   return value && value.length > length ? value.substring(0, length) + '...' : value
 }

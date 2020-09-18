@@ -1,6 +1,6 @@
 <template lang="pug">
   v-app-bar.ui-default-header(app flat color="indigo")
-    v-toolbar-title.white--text Youtubeトレンド検索キーワード (仮)
+    v-toolbar-title.white--text YTシークレットサーチ
     v-spacer
 
     template(v-if="authUser")
