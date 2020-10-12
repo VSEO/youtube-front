@@ -2,8 +2,7 @@
   v-container
     v-row
       v-col(cols="12")
-        p 情報はまだありません
-      //v-col(cols="12")
+        v-col(cols="12")
         v-card(flat)
           v-card-text
             ui-search-form(v-model="form" :loading="loading" @submit="submit")
@@ -12,7 +11,7 @@
               v-btn.text-none.ml-2(small v-for="(suggest, si) in suggests" :key="si" @click="add(suggest.keyword)")
                 v-icon(small) mdi-plus
                 span.ml-1 {{ suggest.keyword }}
-      //v-col(cols="12")
+        v-col(cols="12")
         ui-search-result-list
 </template>
 
