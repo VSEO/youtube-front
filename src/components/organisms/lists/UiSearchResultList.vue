@@ -13,11 +13,11 @@
                 v-card(flat)
                   v-card-text.px-0
                     span {{ data.keyword }}
-            v-col
+            <!-- v-col
               .list-item-header.mb-2 1投稿平均視聴回数
               .list-item-content
                 v-card(outlined :class="buildClass(data.averageViewCount, setting.averageViewCount)")
-                  v-card-text.font-weight-bold {{ data.averageViewCount | formatNumber }}
+                  v-card-text.font-weight-bold {{ data.averageViewCount | formatNumber }} -->
             v-col
               .list-item-header.mb-2 7日間の投稿数
               .list-item-content
